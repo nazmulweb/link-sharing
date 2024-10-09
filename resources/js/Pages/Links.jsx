@@ -12,11 +12,11 @@ const Links = () => {
         <Grid>
             <Col col={2} className='hidden lg:block'>
                 <Card className="p-5">
-                    test
+                    link page left side
                 </Card>
             </Col>
             <Col col={3}>
-                <Card className="p-5">teset right</Card>
+                <Card className="p-5">link page right side</Card>
             </Col>
         </Grid>
     </AuthenticatedLayout>
