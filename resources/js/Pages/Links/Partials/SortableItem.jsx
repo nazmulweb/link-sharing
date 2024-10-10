@@ -4,9 +4,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import {CSS} from '@dnd-kit/utilities';
 import React from 'react'
 
-const SortableItem = ({id, link, removeLink, index, handleChange, errors }) => {
-
-    console.log(link)
+const SortableItem = ({id, link, removeLink, index, handleChange, errors, processing }) => {
 
     const { attributes, listeners, setNodeRef, isDragging, transform, transition } = useSortable({
         id: link.id,
@@ -27,9 +25,9 @@ const SortableItem = ({id, link, removeLink, index, handleChange, errors }) => {
             >
                 <div className='flex justify-between items-center mb-2'>
                     <div {...listeners} style={{ cursor: 'grab' }}>
-                        <i class="bi bi-list text-gray-500 mr-2"></i> Link #{index + 1}
+                        <i className="bi bi-list text-gray-500 mr-2"></i> Link #{index + 1}
                     </div>
-                    <button onClick={removeLink} className='text-gray-500'>Remove</button>
+                    <button type='button' onClick={removeLink} className='text-gray-500' disabled={processing}>Remove</button>
                 </div>
                 <div className='pb-2'>
                     <div>

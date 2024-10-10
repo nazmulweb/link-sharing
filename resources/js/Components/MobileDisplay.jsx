@@ -27,7 +27,7 @@ const MobileDisplay = ({avatar, name, email, socialLinks}) => {
             <div className='social-links mt-8'>
                 {
                     socialLinks ? socialLinks.map((link, index) => (
-                            <a key={link?.id} href={link.url} className="bg-blue-500 text-white py-2 px-5 block rounded">
+                            <a key={link?.id} href={link.url} className={`bg-${link.color ? link.color : 'blue'}-500 text-white py-2 px-5 block rounded mt-2`} target='_blank'>
                                 <div className='flex justify-between'>
                                     <div className='flex gap-2'>
                                         <i className={`bi ${link?.iconName}`}></i>

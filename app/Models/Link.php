@@ -12,6 +12,7 @@ class Link extends Model
     protected $fillable = [
         'name',
         'url',
+        'color',
         'iconName',
         'order',
     ];

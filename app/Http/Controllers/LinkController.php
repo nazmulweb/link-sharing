@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\LinkRequest;
 use App\Models\Link;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -33,10 +32,28 @@ class LinkController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(LinkRequest $request)
+    public function store(Request $request)
     {
 
-        foreach ($request->all()['links'] as $linkData) {
+        $rules = [];
+        foreach ($request->get('links') as $key => $link) {
+            $rules['links.' . $key . '.name'] = 'required|string|unique:links,name,' . ($link['id'] ?? 'NULL');
+            $rules['links.' . $key . '.url'] = [
+                'required',
+                'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
+            ];
+        }
+    
+        $messages = [
+            'links.*.name.required' => 'Name is required.',
+            'links.*.url.required' => 'URL is required.',
+            'links.*.url.regex' => 'The URL format is invalid. Please enter a valid URL.',
+            'links.*.name.unique' => 'The name has already been taken. Please choose a different name.'
+        ];    
+
+        $validatedData = $request->validate($rules, $messages);
+
+        foreach ($request->links as $linkData) {
             $newItem = explode("_", $linkData['id']);
             // inset item if id with the new keyword
             if($newItem[0] == 'new'){
@@ -81,7 +98,7 @@ class LinkController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(LinkRequest $request, Link $link)
+    public function update(Request $request, Link $link)
     {
 
         // $link->update($validated);
@@ -94,9 +111,10 @@ class LinkController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Link $link)
+    public function destroy($id)
     {
+        $link = Link::findOrFail($id);
         $link->delete();
-        return redirect()->route('links.index')->with('success', 'Link deleted successfully.');
+        return redirect()->route('links.index');
     }
 }
