@@ -8,6 +8,7 @@ import {
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import SortableItem from './SortableItem';
 import icon from '@/Constants/icon';
+import { Inertia } from '@inertiajs/inertia'; // Correct import
 import { useForm, usePage } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import dropdown from '@/Constants/dropdown';
@@ -27,11 +28,13 @@ const LinksForm = () => {
     const removeLink = async (index, id) => {
         const updatedLinks = links?.links.filter((_, i) => i !== index);
         setLinks({links: updatedLinks});
-        await destroy(route('links.destroy', id), {
-            onSuccess: () => {
-                toast.success("Link deleted successfully.")
-            }
-        });
+        if(id){
+            await destroy(route('links.destroy', id), {
+                onSuccess: () => {
+                    toast.success("Link deleted successfully.")
+                }
+            });
+        }
     };
 
     // drag and drop form 
@@ -53,7 +56,8 @@ const LinksForm = () => {
          const updatedLinks =   prevLinks?.links?.map((link) => {
                 if (link.id === id) {
                     if(field === "name"){
-                        return {...link,  name: value, color: dropdown[value]?.color , iconName: icon[value] || ""}
+                        const selectedColor = dropdown.find(item => item.name === value);
+                        return {...link,  name: value, color: selectedColor?.color , iconName: icon[value] || ""}
                     } 
                     return { ...link, [field]: value };
                 }
@@ -72,6 +76,8 @@ const LinksForm = () => {
         e.preventDefault();
         post(route('links.store'), {
             onSuccess: () => {
+                // Inertia.reload();
+                Inertia.visit(window.location.href, { preserveState: true });
                 toast.success("Link saved successfully.")
             }
         });
@@ -92,15 +98,15 @@ const LinksForm = () => {
                         <DndContext onDragEnd={handleDragEnd}>
                             <SortableContext items={links?.links?.map(link => link.id)} strategy={verticalListSortingStrategy}>
                                 {links?.links?.map((link, index) => (
-                                <SortableItem
-                                    id={link.id}
-                                    index={index}
-                                    link={link}
-                                    removeLink={() => removeLink(index, link.id)}
-                                    handleChange={handleChange}
-                                    errors={errors}
-                                    processing
-                                />
+                                    <SortableItem
+                                        id={link.id}
+                                        index={index}
+                                        link={link}
+                                        removeLink={() => removeLink(index, link.id)}
+                                        handleChange={handleChange}
+                                        errors={errors}
+                                        processing={processing}
+                                    />
                                 ))}
                             </SortableContext>
                         </DndContext>

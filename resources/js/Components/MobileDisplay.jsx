@@ -3,7 +3,7 @@ import React from 'react'
 const MobileDisplay = ({avatar, isBg, name, email, socialLinks}) => {
   return (
     <div className={`border ${isBg ? 'bg-white shadow-2xl p-5' : 'border-gray-600' } rounded-[45px] w-72 m-auto min-h-[500px] p-2`}>
-        <div className={`${isBg? '' : 'border border-gray-600 rounded-[40px] w-full h-full px-5 py-3'}`}>
+        <div className={`${isBg? '' : 'border border-gray-600 rounded-[40px] w-full min-h-[488px] px-5 py-3'}`}>
             {!isBg && <div className='h-3 w-20 border border-gray-400 rounded-full m-auto'></div>}
             <div className='h-28 w-28 rounded-full m-auto mt-8 bg-gray-200 overflow-hidden'>
                 {
@@ -26,12 +26,11 @@ const MobileDisplay = ({avatar, isBg, name, email, socialLinks}) => {
             </div>
             <div className='social-links mt-8'>
                 {
-                    socialLinks ? socialLinks.map((link, index) => (
-                            <a key={link?.id} href={link.url} className={`bg-${link.color ? link.color : 'blue'}-500 text-white py-2 px-5 block rounded mt-2`} target='_blank'>
+                    socialLinks.length > 0 ? socialLinks.map((link, index) => (
+                            <a key={link?.id} href={link.url} className={`${link.color === 'black' ? `bg-black` : `bg-${link.color ? link.color : 'blue'}-500`} text-white py-2 px-5 block rounded mt-2`} target='_blank'>
                                 <div className='flex justify-between'>
                                     <div className='flex gap-2'>
                                         <i className={`bi ${link?.iconName}`}></i>
-                                        {/* <i className="bi bi-check-circle"></i> */}
                                         {link?.name}
                                     </div>
                                     <div>

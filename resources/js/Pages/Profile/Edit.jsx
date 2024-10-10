@@ -12,7 +12,7 @@ export default function Edit({ mustVerifyEmail, status }) {
 
     const {first_name, last_name, email, picture} = usePage().props.auth.user;
     const { links: allLinks } = usePage().props;
-    const [imagePreview, setImagePreview] = useState(`assets/images/${picture}`)
+    const [imagePreview, setImagePreview] = useState(picture ? `assets/images/${picture}` : null)
 
     return (
         <AuthenticatedLayout>

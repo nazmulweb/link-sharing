@@ -22,11 +22,11 @@ Route::get('/', function () {
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::get('/preview', [LinkController::class, 'show'])->name('links.preview');
     Route::get('/links', [LinkController::class, 'index'])->name('links.index');
     Route::post('/links', [LinkController::class, 'store'])->name( 'links.store');
-    Route::delete('/links', [LinkController::class, 'destroy'])->name('links.destroy');
+    Route::delete('/links/{id}', [LinkController::class, 'destroy'])->name('links.destroy');
 });
 
 require __DIR__.'/auth.php';

@@ -60,6 +60,7 @@ class LinkController extends Controller
                     'name' => $linkData['name'],
                     'url'=> $linkData['url'], 
                     'iconName'=> $linkData['iconName'], 
+                    'color'=> $linkData['color'], 
                     'order'=> $linkData['order']
                 ]);
             } else{
@@ -68,6 +69,7 @@ class LinkController extends Controller
                     'name' => $linkData['name'],
                     'url'=> $linkData['url'], 
                     'iconName'=> $linkData['iconName'], 
+                    'color'=> $linkData['color'], 
                     'order'=> $linkData['order']
                 ]);
             }

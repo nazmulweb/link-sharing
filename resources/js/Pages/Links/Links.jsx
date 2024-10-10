@@ -11,7 +11,7 @@ import LinksForm from './Partials/LinksForm'
 const Links = () => {
   const {first_name, last_name, email, picture} = usePage().props.auth.user;
   const { links: allLinks } = usePage().props;
-  const [imagePreview] = useState(`assets/images/${picture}`)
+  const [imagePreview] = useState(picture ? `assets/images/${picture}` : null)
 
   return (
     <AuthenticatedLayout>
