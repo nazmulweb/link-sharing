@@ -15,7 +15,6 @@ class LinkController extends Controller
     public function index()
     {
         $links = Link::orderBy('order', 'asc')->get();
-        // dd($links);
         return Inertia::render('Links/Links', [
             'links' => $links,
         ]);
@@ -80,33 +79,15 @@ class LinkController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Link $link)
+    public function show()
     {
+        $links = Link::orderBy('order', 'asc')->get();
         return Inertia::render('Links/Details', [
-            'link' => $link,
+            'links' => $links,
         ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Link $link)
-    {
-
-        // $link->update($validated);
-        $link->update($request->only(['name', 'url']));
-
-        return redirect()->route('links.index')->with('success', 'Link updated successfully.');
-
-    }
+  
 
     /**
      * Remove the specified resource from storage.

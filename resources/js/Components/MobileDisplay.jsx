@@ -1,10 +1,10 @@
 import React from 'react'
 
-const MobileDisplay = ({avatar, name, email, socialLinks}) => {
+const MobileDisplay = ({avatar, isBg, name, email, socialLinks}) => {
   return (
-    <div className='border border-gray-600 rounded-[45px] w-72 m-auto h-[500px] p-2'>
-        <div className='border border-gray-600 rounded-[40px] w-full h-full px-5 py-3'>
-            <div className='h-3 w-20 border border-gray-400 rounded-full m-auto'></div>
+    <div className={`border ${isBg ? 'bg-white shadow-2xl p-5' : 'border-gray-600' } rounded-[45px] w-72 m-auto min-h-[500px] p-2`}>
+        <div className={`${isBg? '' : 'border border-gray-600 rounded-[40px] w-full h-full px-5 py-3'}`}>
+            {!isBg && <div className='h-3 w-20 border border-gray-400 rounded-full m-auto'></div>}
             <div className='h-28 w-28 rounded-full m-auto mt-8 bg-gray-200 overflow-hidden'>
                 {
                     avatar && <img src={avatar} alt="profile" className="object-cover"/>
