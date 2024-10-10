@@ -1,46 +1,76 @@
-import React, { useState } from 'react'
-import { DndContext, useDroppable } from '@dnd-kit/core';
+import React from 'react'
+import { DndContext } from '@dnd-kit/core';
 import {
+    arrayMove,
   SortableContext,
-  useSortable,
   verticalListSortingStrategy,
 } from '@dnd-kit/sortable';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import SortableItem from './SortableItem';
-
+import icon from '@/Constants/icon';
+import { Inertia } from '@inertiajs/inertia';
+import { useForm, usePage } from '@inertiajs/react';
+import { toast } from 'react-toastify';
 
 
 const LinksForm = () => {
+    const { links: allLinks } = usePage().props;
+    console.log(allLinks)
+    const { data: links, setData: setLinks, post, errors, processing, recentlySuccessful } =
+    useForm({links: allLinks ? allLinks : [{ id: `new_${Date.now()}`, name: '', url: '', iconName: '', order: 1 }]});
 
-    const [links, setLinks] = useState([{ id: Date.now(), url: '', iconName: '', order: 1 }]);
-
+    // add new link form 
     const addLink = () => {
-        console.log('test')
-      setLinks([...links, { id: Date.now(), url: '', iconName: '', order: links.length + 1 }]);
+      setLinks({links: [{ id: `new_${Date.now()}`, name: '', url: '', iconName: '', order: links.links.length + 1 }, ...links.links]});
     };
   
+    // remove link form 
     const removeLink = (index) => {
-        console.log(index)
-      setLinks(links.filter((_, i) => i !== index));
+      setLinks(links?.links.filter((_, i) => i !== index));
     };
 
+    // drag and drop form 
     const handleDragEnd = (event) => {
         const { active, over } = event;
     
         if (active.id !== over.id) {
-          const oldIndex = links.findIndex(link => link.id === active.id);
-          const newIndex = links.findIndex(link => link.id === over.id);
-    
-          const updatedLinks = Array.from(links);
-          const [movedLink] = updatedLinks.splice(oldIndex, 1);
-          updatedLinks.splice(newIndex, 0, movedLink);
-          setLinks(updatedLinks);
+            setLinks((prevLinks) => {
+                const oldIndex = links?.links?.findIndex(link => link.id === active.id);
+                const newIndex = links?.links?.findIndex(link => link.id === over.id);
+
+                return {links: arrayMove(prevLinks?.links, oldIndex, newIndex)}
+            })
         }
     };
 
+    const handleChange = (id, field, value) => {
+        setLinks((prevLinks) =>{
+         const updatedLinks =   prevLinks?.links?.map((link) => {
+                if (link.id === id) {
+                    if(field === "name"){
+                        return {...link,  name: value, iconName: icon[value] || ""}
+                    } 
+                    return { ...link, [field]: value };
+                }
+                return link;
+            })
+            return {
+                links: updatedLinks
+            }
+        }
+ 
+        );
+    };
 
+    // submit form 
     const submitForm = async (e) => {
         e.preventDefault();
+        post(route('links.store'), {
+            onSuccess: () => {
+                toast.success("Link saved successfully.")
+                reset()
+            }
+        });
     }
 
     return (
@@ -49,28 +79,30 @@ const LinksForm = () => {
                 <button type="button" onClick={addLink} className="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-6 dark:border-purple-500 dark:text-purple-500 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-800 w-full"><i className="bi bi-plus"></i> Add new link</button>
             </div>
             <form onSubmit={submitForm}>
-                    <div className='h-96 pb-8'>
+                    <div className='h-96 pb-14'>
                         <PerfectScrollbar
                             options={{
                                 wheelPropagation: false,
                             }}
                         >
-                                <DndContext onDragEnd={handleDragEnd}>
-                                    <SortableContext items={links.map(link => link.id)} strategy={verticalListSortingStrategy}>
-                                        {links.map((link, index) => (
-                                        <SortableItem
-                                            key={link.id}
-                                            index={index}
-                                            link={link}
-                                            removeLink={() => removeLink(index)}
-                                        />
-                                        ))}
-                                    </SortableContext>
-                                </DndContext>
+                            <DndContext onDragEnd={handleDragEnd}>
+                                <SortableContext items={links?.links?.map(link => link.id)} strategy={verticalListSortingStrategy}>
+                                    {links?.links?.map((link, index) => (
+                                    <SortableItem
+                                        id={link.id}
+                                        index={index}
+                                        link={link}
+                                        removeLink={() => removeLink(index)}
+                                        handleChange={handleChange}
+                                        errors={errors}
+                                    />
+                                    ))}
+                                </SortableContext>
+                            </DndContext>
                         </PerfectScrollbar>
                     </div>
                     <div className=' absolute bottom-0 w-full rounded-b-full bg-white py-5 border-t left-0 flex justify-end pr-8'>
-                        <button type="submit" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Submit</button>
+                        <button type="submit" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Save</button>
                     </div>
             </form>
         </div>

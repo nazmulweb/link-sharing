@@ -18,15 +18,15 @@ export default function AuthenticatedLayout({ header, children }) {
                     <div className="flex h-16 justify-between">
                         <div className="flex items-center justify-between w-full">
                             <div className="flex shrink-0 items-center">
-                                <Link href={route('links')}>
+                                <Link href={route('links.index')}>
                                     <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
                                 </Link>
                             </div>
 
                             <div className="space-x-8 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
-                                    href={route('links')}
-                                    active={route().current('links')}
+                                    href={route('links.index')}
+                                    active={route().current('links.index')}
                                 >
                                     Links
                                 </NavLink>

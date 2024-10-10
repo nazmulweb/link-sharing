@@ -35,7 +35,7 @@ const MobileDisplay = ({avatar, name, email, socialLinks}) => {
                                         {link?.name}
                                     </div>
                                     <div>
-                                        <i class="bi bi-arrow-right"></i>
+                                        <i className="bi bi-arrow-right"></i>
                                     </div>
                                 </div>
                             </a>
