@@ -1,39 +1,42 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
-import DeleteUserForm from './Partials/DeleteUserForm';
-import UpdatePasswordForm from './Partials/UpdatePasswordForm';
+import { Head, usePage } from '@inertiajs/react';
 import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
+import Grid from '@/Components/Grid';
+import Col from '@/Components/Col';
+import Card from '@/Components/Card';
+import MobileDisplay from '@/Components/MobileDisplay';
+import PageTitle from '@/Components/PageTitle';
+import { useState } from 'react';
 
 export default function Edit({ mustVerifyEmail, status }) {
+
+    const {first_name, last_name, email, picture} = usePage().props.auth.user;
+    const { links: allLinks } = usePage().props;
+    const [imagePreview, setImagePreview] = useState(`assets/images/${picture}`)
+
     return (
-        <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Profile
-                </h2>
-            }
-        >
+        <AuthenticatedLayout>
             <Head title="Profile" />
 
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl space-y-6 sm:px-6 lg:px-8">
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <UpdateProfileInformationForm
-                            mustVerifyEmail={mustVerifyEmail}
-                            status={status}
-                            className="max-w-xl"
-                        />
-                    </div>
-
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <UpdatePasswordForm className="max-w-xl" />
-                    </div>
-
-                    <div className="bg-white p-4 shadow sm:rounded-lg sm:p-8">
-                        <DeleteUserForm className="max-w-xl" />
-                    </div>
-                </div>
-            </div>
+            <Grid>
+                <Col col={2} className='hidden lg:block'>
+                    <Card className="p-5 h-full">
+                        <MobileDisplay avatar={imagePreview} name={`${first_name} ${last_name}`} email={email} socialLinks={allLinks} />
+                    </Card>
+                </Col>
+                <Col col={3}>
+                    <Card className="p-5 h-full relative">
+                        <PageTitle title="Profile Details" subTitle="Add your details to create a personal touch to your profile" />
+                        <div>
+                            <UpdateProfileInformationForm
+                                mustVerifyEmail={mustVerifyEmail}
+                                status={status}
+                                imagePreview={setImagePreview}
+                            />
+                        </div>
+                    </Card>
+                </Col>
+            </Grid>
         </AuthenticatedLayout>
     );
 }
