@@ -15,7 +15,7 @@ Route::get('/', function () {
 });
 
 Route::get('/links', function () {
-    return Inertia::render('Links');
+    return Inertia::render('Links/Links');
 })->middleware(['auth', 'verified'])->name('links');
 
 Route::middleware('auth')->group(function () {

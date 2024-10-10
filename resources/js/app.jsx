@@ -5,6 +5,8 @@ import { createInertiaApp } from '@inertiajs/react';
 import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import { createRoot } from 'react-dom/client';
 import 'bootstrap-icons/font/bootstrap-icons.css';
+import 'react-perfect-scrollbar/dist/css/styles.css';
+
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
