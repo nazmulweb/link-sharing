@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('iconName')->nullable();
             $table->string('color')->nullable();
             $table->integer('order')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Relating the link to a user
             $table->timestamps();
         });
     }
@@ -27,6 +28,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('links');
+        Schema::table('links', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
+            $table->dropColumn('user_id');
+            $table->dropIfExists();
+        });
     }
 };

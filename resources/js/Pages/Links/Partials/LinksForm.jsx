@@ -12,6 +12,7 @@ import { Inertia } from '@inertiajs/inertia'; // Correct import
 import { useForm, usePage } from '@inertiajs/react';
 import { toast } from 'react-toastify';
 import dropdown from '@/Constants/dropdown';
+import SecondaryButton from '@/Components/SecondaryButton';
 
 
 const LinksForm = () => {
@@ -86,7 +87,7 @@ const LinksForm = () => {
     return (
         <div className=''>
             <div className='mt-5'>
-                <button type="button" onClick={addLink} className="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-6 dark:border-purple-500 dark:text-purple-500 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-800 w-full"><i className="bi bi-plus"></i> Add new link</button>
+                <button type="button" onClick={addLink} className="text-purple-700 flex items-center justify-center hover:text-white border border-purple-700 hover:bg-purple-800 font-medium rounded-lg px-5 py-2.5 text-center me-2 mb-6 dark:border-purple-500 dark:text-purple-500 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-800 w-full"><i className="bi bi-plus text-2xl"></i> Add new link</button>
             </div>
             <form onSubmit={submitForm}>
                 <div className='h-96 pb-14'>
@@ -113,7 +114,7 @@ const LinksForm = () => {
                     </PerfectScrollbar>
                 </div>
                 <div className=' absolute bottom-0 w-full rounded-b-full bg-white py-5 border-t left-0 flex justify-end pr-8'>
-                    <button type="submit" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" disabled={processing}>{processing ? 'Saving...' : 'Save'}</button>
+                    <SecondaryButton type='submit' solid disabled={processing}>{processing ? 'Saving...' : 'Save'}</SecondaryButton>
                 </div>
             </form>
         </div>

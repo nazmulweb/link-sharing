@@ -3,6 +3,9 @@ export default function SecondaryButton({
     className = '',
     disabled,
     children,
+    solid,
+    border,
+    active,
     ...props
 }) {
     return (
@@ -10,7 +13,7 @@ export default function SecondaryButton({
             {...props}
             type={type}
             className={
-                `inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-widest text-gray-700 shadow-sm transition duration-150 ease-in-out hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-25 ${
+                `inline-flex items-center gap-2 rounded-md bg-white px-3 md:px-4 lg:px-6 py-2 text-base font-semibold text-purple-700 transition duration-150 ease-in-out hover:bg-gray-100 disabled:opacity-25 ${solid && '!bg-purple-700 !text-white'} ${active && '!bg-gray-100'} ${border && 'border border-purple-300'} ${
                     disabled && 'opacity-25'
                 } ` + className
             }

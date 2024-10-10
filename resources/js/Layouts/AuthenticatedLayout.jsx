@@ -2,14 +2,11 @@ import ApplicationLogo from '@/Components/ApplicationLogo';
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+import SecondaryButton from '@/Components/SecondaryButton';
 import { Link, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 export default function AuthenticatedLayout({ header, children }) {
-    const user = usePage().props.auth.user;
-
-    const [showingNavigationDropdown, setShowingNavigationDropdown] =
-        useState(false);
 
     return (
         <div className="min-h-screen bg-gray-100">
@@ -23,26 +20,35 @@ export default function AuthenticatedLayout({ header, children }) {
                                 </Link>
                             </div>
 
-                            <div className="space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <div className="space-x-6 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     href={route('links.index')}
-                                    active={route().current('links.index')}
                                 >
-                                    Links
+                                    <SecondaryButton active={route().current('links.index')}>
+                                        <i class="bi bi-link-45deg"></i>
+                                        <span className=' hidden md:block'>
+                                            Links
+                                        </span>
+                                    </SecondaryButton>
                                 </NavLink>
                                 <NavLink
                                     href={route('profile.edit')}
-                                    active={route().current('profile.edit')}
                                 >
-                                    Profile
+                                    <SecondaryButton active={route().current('profile.edit')}>
+                                        <i class="bi bi-person"></i>
+                                        <span className='hidden md:block'>Profile Details</span>
+                                    </SecondaryButton>
                                 </NavLink>
                             </div>
-                            <div>
+                            <div className="space-x-6 sm:-my-px sm:ms-10 sm:flex">
                                 <NavLink
                                     href={route('links.preview')}
-                                    active={route().current('links.preview')}
+                                    
                                 >
-                                    Preview
+                                    <SecondaryButton border active={route().current('links.preview')}>
+                                        <i class="bi bi-eye block md:hidden"></i>
+                                        <span className='hidden md:block'>Preview</span>
+                                    </SecondaryButton>
                                 </NavLink>
 
                                 <NavLink
@@ -50,7 +56,10 @@ export default function AuthenticatedLayout({ header, children }) {
                                     href={route('logout')}
                                     as="button"
                                 >
-                                    Log Out
+                                <SecondaryButton border className=' border-red-300 text-red-400'>
+                                    <i class="bi bi-box-arrow-in-right block md:hidden"></i>
+                                    <span className='hidden md:block'>Log Out</span>
+                                </SecondaryButton>
                                 </NavLink>
                             </div>
                         </div>

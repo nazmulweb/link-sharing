@@ -13,7 +13,7 @@ const icon = {
     tiktok: 'bi-tiktok',
     discord: 'bi-discord',
     twitch: 'bi-twitch',
-    stackoverflow: 'bi-stackoverflow',
+    stackoverflow: 'bi-stack-overflow',
 }
 
 export default icon
