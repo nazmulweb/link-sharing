@@ -1,5 +1,6 @@
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
+import SecondaryButton from '@/Components/SecondaryButton';
 import TextInput from '@/Components/TextInput';
 import { useForm, usePage } from '@inertiajs/react';
 import { useState } from 'react';
@@ -9,7 +10,7 @@ export default function UpdateProfileInformation({
     className = '',
     imagePreview
 }) {
-    
+
     const user = usePage().props.auth.user;
     const [previewUrl, setPreviewUrl] = useState(user.picture ? `assets/images/${user?.picture}` : null);
 
@@ -128,9 +129,8 @@ export default function UpdateProfileInformation({
                         </div>
                     </PerfectScrollbar>
                 </div>
-
                 <div className=' absolute bottom-0 w-full rounded-b-full bg-white py-5 border-t left-0 flex justify-end pr-8'>
-                    <button type="submit" className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900" disabled={processing}>{processing ? 'Saving...' : 'Save'}</button>
+                    <SecondaryButton type='submit' solid disabled={processing}>{processing ? 'Saving...' : 'Save'}</SecondaryButton>
                 </div>
             </form>
         </section>

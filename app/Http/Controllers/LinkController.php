@@ -14,18 +14,10 @@ class LinkController extends Controller
      */
     public function index()
     {
-        $links = Link::orderBy('order', 'asc')->get();
+        $links = Link::where('user_id', auth()->id())->orderBy('order', 'desc')->get();
         return Inertia::render('Links/Links', [
             'links' => $links,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -60,14 +52,17 @@ class LinkController extends Controller
                     'name' => $linkData['name'],
                     'url'=> $linkData['url'], 
                     'iconName'=> $linkData['iconName'], 
-                    'order'=> $linkData['order']
+                    'color'=> $linkData['color'], 
+                    'order'=> $linkData['order'],
+                    'user_id' => auth()->id()
                 ]);
             } else{
                 // update item 
-                Link::where('id', $linkData['id'])->update([
+                Link::where('id', $linkData['id'])->where('user_id', auth()->id())->update([
                     'name' => $linkData['name'],
                     'url'=> $linkData['url'], 
                     'iconName'=> $linkData['iconName'], 
+                    'color'=> $linkData['color'], 
                     'order'=> $linkData['order']
                 ]);
             }
@@ -81,20 +76,18 @@ class LinkController extends Controller
      */
     public function show()
     {
-        $links = Link::orderBy('order', 'asc')->get();
+        $links = Link::where('user_id', auth()->id())->orderBy('order', 'desc')->get();
         return Inertia::render('Links/Details', [
             'links' => $links,
         ]);
     }
-
-  
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy($id)
     {
-        $link = Link::findOrFail($id);
+        $link = Link::where('user_id', auth()->id())->findOrFail($id);
         $link->delete();
         return redirect()->route('links.index');
     }

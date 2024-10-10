@@ -15,6 +15,8 @@ const SortableItem = ({id, link, removeLink, index, handleChange, errors, proces
         transition,
     };
 
+    // console.log(processing)
+
     return (
         <div>
             <div
