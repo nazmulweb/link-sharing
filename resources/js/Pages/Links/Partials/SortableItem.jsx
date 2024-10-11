@@ -32,7 +32,7 @@ const SortableItem = ({id, link, removeLink, index, handleChange, errors, proces
                 <div className='pb-2'>
                     <div>
                         <label htmlFor="platform">
-                            Platform
+                            Platform*
                         </label>
                         <select 
                             className='w-full rounded'
@@ -51,7 +51,7 @@ const SortableItem = ({id, link, removeLink, index, handleChange, errors, proces
                         />
                     </div>
                     <div className='w-full mt-3'>
-                        <label htmlFor="link">Link</label>
+                        <label htmlFor="link">Link*</label>
                         <input
                             value={link?.url}
                             id='link'
