@@ -1,66 +1,124 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+It is a full-stack application build with laravel and react.js. thechnology used to build the application below.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+1. Laravel
+2. React.js
+3. MySql
+4. Tailwind css
+5. Docker
 
-## About Laravel
+Follow the below instruction to run the project locally. you can run the project two way using docker or using XAMPP. follow the blow guide.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+# Project Setup Documentation
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Prerequisites
+* Ensure you have XAMPP installed on your system.
+* Make sure Composer is installed globally.
+Steps to Run the Project
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 1. Install Composer Dependencies
+Open your terminal and navigate to your project directory. Run the following command to install all the necessary dependencies:
 
-## Learning Laravel
+    composer install
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 2. Create Environment File
+Copy the example environment file and create a new .env file. You can do this by executing:
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+    cp .env.example .env
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 3. Update Database Variables
 
-## Laravel Sponsors
+Open the newly created .env file in your preferred text editor. Update the following database variables to match your XAMPP configuration:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=your_database_name
+    DB_USERNAME=your_username
+    DB_PASSWORD=your_password
 
-### Premium Partners
+## 4. Generate Application Key
+ 
+ Run the following command to generate a new application key:
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+    php artisan key:generate
 
-## Contributing
+## 5. Run Migrations
+Run the following command to apply all database migrations:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+    php artisan migrate
 
-## Code of Conduct
+## 6. Seed the Database
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+If you have seeders set up, you can populate your database with initial data using the following command:
 
-## Security Vulnerabilities
+    php artisan db:seed
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## 7. Start the Development Server
 
-## License
+Finally, run the built-in PHP development server to launch your project:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+    php artisan serve
+
+Your application should now be running at http://localhost:8000 (or the specified port).
+
+# Project Setup Documentation with Laravel Sail
+
+
+## Prerequisites
+
+* Ensure you have Docker installed on your system.
+* Install Laravel Sail by running the following command in your terminal:
+
+# Steps to Run the Project
+
+## 1. Install Composer Dependencies
+
+    docker run --rm \
+    -u "$(id -u):$(id -g)" \
+    -v "$(pwd):/var/www/html" \
+    -w /var/www/html \
+    laravelsail/php83-composer:latest \
+    composer install --ignore-platform-reqs
+
+## 2. Copy .env File
+
+Copy the .env.example file to .env:
+
+    cp .env.example .env
+
+## 3. Update Database Variables
+
+Open the newly created .env file in your preferred text editor. Update the following database variables to match your XAMPP configuration:
+
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=your_database_name
+    DB_USERNAME=your_username
+    DB_PASSWORD=your_password
+
+## 2. Start Laravel Sail
+Start your Laravel Sail environment with the following command:
+
+    ./vendor/bin/sail up
+
+## 3. Run Migrations
+Execute the migrations to set up your database tables:
+
+    ./vendor/bin/sail artisan migrate
+
+## 4. Install NPM Dependencies
+Install the required NPM dependencies for your project:
+
+    ./vendor/bin/sail npm install
+
+## 5. Run Development Build
+Compile your assets for development using the following command:
+
+    ./vendor/bin/sail npm run dev
+
+## 6. Generate Application Key
+Generate a new application key for your Laravel application:
+
+    ./vendor/bin/sail artisan key:generate
+
