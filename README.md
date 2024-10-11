@@ -8,7 +8,22 @@ It is a full-stack application build with laravel and react.js. thechnology used
 
 Follow the below instruction to run the project locally. you can run the project two way using docker or using XAMPP. follow the blow guide.
 
-# Project Setup Documentation
+# Steps to Run the Project
+
+## 1. Clone the Project Repository
+First, clone the project to your local machine using the following command:
+
+    git clone <repository-url>
+
+Replace <repository-url> with the actual Git repository URL of the project.
+
+## 2. Navigate to the Project Directory
+Once the project is cloned, navigate to the project directory:
+
+    cd <project-directory>
+    
+Replace <project-directory> with the actual folder name where the project is cloned.
+
 
 ## Prerequisites
 * Ensure you have XAMPP installed on your system.
