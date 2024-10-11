@@ -14,7 +14,10 @@ class LinkController extends Controller
      */
     public function index()
     {
-        $links = Link::where('user_id', auth()->id())->orderBy('order', 'desc')->get();
+        $links = Link::where('user_id', auth()->id())
+            ->orderBy('order', 'asc')
+            ->get();
+
         return Inertia::render('Links/Links', [
             'links' => $links,
         ]);
@@ -28,7 +31,7 @@ class LinkController extends Controller
 
         $rules = [];
         foreach ($request->get('links') as $key => $link) {
-            $rules['links.' . $key . '.name'] = 'required|string|unique:links,name,' . ($link['id'] ?? 'NULL');
+            $rules['links.' . $key . '.name'] = 'required|string|unique:links,name,' . ($link['id'] ?? 'NULL') . ',id,user_id,' . auth()->id();
             $rules['links.' . $key . '.url'] = [
                 'required',
                 'regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/',
@@ -44,7 +47,7 @@ class LinkController extends Controller
 
         $validatedData = $request->validate($rules, $messages);
 
-        foreach ($request->links as $linkData) {
+        foreach ($request->links as $index => $linkData) {
             $newItem = explode("_", $linkData['id']);
             // inset item if id with the new keyword
             if($newItem[0] == 'new'){
@@ -53,18 +56,20 @@ class LinkController extends Controller
                     'url'=> $linkData['url'], 
                     'iconName'=> $linkData['iconName'], 
                     'color'=> $linkData['color'], 
-                    'order'=> $linkData['order'],
+                    'order'=> $index + 1,
                     'user_id' => auth()->id()
                 ]);
             } else{
                 // update item 
-                Link::where('id', $linkData['id'])->where('user_id', auth()->id())->update([
-                    'name' => $linkData['name'],
-                    'url'=> $linkData['url'], 
-                    'iconName'=> $linkData['iconName'], 
-                    'color'=> $linkData['color'], 
-                    'order'=> $linkData['order']
-                ]);
+                Link::where('id', $linkData['id'])
+                    ->where('user_id', auth()->id())
+                    ->update([
+                        'name' => $linkData['name'],
+                        'url'=> $linkData['url'], 
+                        'iconName'=> $linkData['iconName'], 
+                        'color'=> $linkData['color'], 
+                        'order'=> $index + 1
+                    ]);
             }
         }    
 
@@ -76,7 +81,7 @@ class LinkController extends Controller
      */
     public function show()
     {
-        $links = Link::where('user_id', auth()->id())->orderBy('order', 'desc')->get();
+        $links = Link::where('user_id', auth()->id())->orderBy('order', 'asc')->get();
         return Inertia::render('Links/Details', [
             'links' => $links,
         ]);

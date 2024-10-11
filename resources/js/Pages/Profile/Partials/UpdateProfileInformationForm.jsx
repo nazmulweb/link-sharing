@@ -5,6 +5,7 @@ import TextInput from '@/Components/TextInput';
 import { useForm, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import { toast } from 'react-toastify';
 
 export default function UpdateProfileInformation({
     className = '',
@@ -42,6 +43,9 @@ export default function UpdateProfileInformation({
     const submit = (e) => {
         e.preventDefault();
         post(route('profile.update'), {
+            onSuccess: () =>{
+                toast.success("Profile saved successfully.")
+            },
             forceFormData: true,
         });
     };

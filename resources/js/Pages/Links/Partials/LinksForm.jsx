@@ -43,12 +43,23 @@ const LinksForm = () => {
         const { active, over } = event;
     
         if (active.id !== over.id) {
-            setLinks((prevLinks) => {
-                const oldIndex = links?.links?.findIndex(link => link.id === active.id);
-                const newIndex = links?.links?.findIndex(link => link.id === over.id);
+            // setLinks((prevLinks) => {
+            //     const oldIndex = links?.links?.findIndex(link => link.id === active.id);
+            //     const newIndex = links?.links?.findIndex(link => link.id === over.id);
 
-                return {links: arrayMove(prevLinks?.links, oldIndex, newIndex)}
-            })
+            //     return {links: arrayMove(prevLinks?.links, oldIndex, newIndex)}
+            // })
+            const { active, over } = event;
+    
+            if (active.id !== over.id) {
+              const oldIndex = links?.links?.findIndex(link => link.id === active.id);
+              const newIndex = links?.links?.findIndex(link => link.id === over.id);
+        
+              const updatedLinks = Array.from(links?.links);
+              const [movedLink] = updatedLinks.splice(oldIndex, 1);
+              updatedLinks.splice(newIndex, 0, movedLink);
+              setLinks({links:updatedLinks});
+            }
         }
     };
 
@@ -77,12 +88,12 @@ const LinksForm = () => {
         e.preventDefault();
         post(route('links.store'), {
             onSuccess: () => {
-                // Inertia.reload();
-                Inertia.visit(window.location.href, { preserveState: true });
                 toast.success("Link saved successfully.")
+                Inertia.visit(window.location.href, { preserveState: true });
             }
         });
     }
+
 
     return (
         <div className=''>
@@ -100,6 +111,7 @@ const LinksForm = () => {
                             <SortableContext items={links?.links?.map(link => link.id)} strategy={verticalListSortingStrategy}>
                                 {links?.links?.map((link, index) => (
                                     <SortableItem
+                                        key={link.id}
                                         id={link.id}
                                         index={index}
                                         link={link}

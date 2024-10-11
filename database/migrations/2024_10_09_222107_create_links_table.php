@@ -13,13 +13,16 @@ return new class extends Migration
     {
         Schema::create('links', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable()->unique();
+            $table->string('name')->nullable();
             $table->string('url')->nullable();
             $table->string('iconName')->nullable();
             $table->string('color')->nullable();
             $table->integer('order')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade'); // Relating the link to a user
             $table->timestamps();
+
+            // Add a composite unique index for the name and user_id
+            $table->unique(['name', 'user_id']);
         });
     }
 
@@ -29,8 +32,9 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('links', function (Blueprint $table) {
+            $table->dropUnique(['name', 'user_id']);
             $table->dropForeign(['user_id']);
-            $table->dropColumn('user_id');
+
             $table->dropIfExists();
         });
     }
