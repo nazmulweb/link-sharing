@@ -91,7 +91,7 @@ Copy the .env.example file to .env:
 Open the newly created .env file in your preferred text editor. Update the following database variables to match your XAMPP configuration:
 
     DB_CONNECTION=mysql
-    DB_HOST=127.0.0.1
+    DB_HOST=mysql
     DB_PORT=3306
     DB_DATABASE=your_database_name
     DB_USERNAME=your_username
