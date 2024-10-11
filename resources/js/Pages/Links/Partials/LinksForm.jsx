@@ -43,12 +43,6 @@ const LinksForm = () => {
         const { active, over } = event;
     
         if (active.id !== over.id) {
-            // setLinks((prevLinks) => {
-            //     const oldIndex = links?.links?.findIndex(link => link.id === active.id);
-            //     const newIndex = links?.links?.findIndex(link => link.id === over.id);
-
-            //     return {links: arrayMove(prevLinks?.links, oldIndex, newIndex)}
-            // })
             const { active, over } = event;
     
             if (active.id !== over.id) {
@@ -104,7 +98,7 @@ const LinksForm = () => {
                 <div className='h-96 pb-14'>
                     <PerfectScrollbar
                         options={{
-                            wheelPropagation: false,
+                            // wheelPropagation: false,
                         }}
                     >
                         <DndContext onDragEnd={handleDragEnd}>

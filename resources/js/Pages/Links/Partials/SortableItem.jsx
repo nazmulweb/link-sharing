@@ -57,7 +57,7 @@ const SortableItem = ({id, link, removeLink, index, handleChange, errors, proces
                             id='link'
                             onChange={(e) => handleChange(id, 'url', e.target.value)}
                             type="text"
-                            placeholder="Icon Name"
+                            placeholder="Enter a valid url"
                             className='w-full rounded'
                         />
                         <InputError

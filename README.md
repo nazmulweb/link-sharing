@@ -49,7 +49,7 @@ Run the following command to apply all database migrations:
 
 ## 6. Seed the Database
 
-If you have seeders set up, you can populate your database with initial data using the following command:
+You can populate your database with initial data using the following command:
 
     php artisan db:seed
 
@@ -107,18 +107,33 @@ Execute the migrations to set up your database tables:
 
     ./vendor/bin/sail artisan migrate
 
-## 4. Install NPM Dependencies
+## 4. Seed the Database
+You can populate your database with initial data using the following command:
+
+    php artisan db:seed
+
+## 5. Install NPM Dependencies
 Install the required NPM dependencies for your project:
 
     ./vendor/bin/sail npm install
 
-## 5. Run Development Build
+## 6. Run Development Build
 Compile your assets for development using the following command:
 
     ./vendor/bin/sail npm run dev
 
-## 6. Generate Application Key
+## 7. Generate Application Key
 Generate a new application key for your Laravel application:
 
     ./vendor/bin/sail artisan key:generate
 
+# Access the Application
+
+## 1. Go to the Login Page
+After successfully running the application using the previous steps, open your browser and go to the login page (e.g., http://localhost:8000/login).
+
+## 2. Login or Register
+If you have already run the database seeder command, you can log in with the following default credentials:
+
+    Email: admin@gmail.com
+    Password: password1
