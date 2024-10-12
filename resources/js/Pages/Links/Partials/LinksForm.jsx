@@ -29,13 +29,12 @@ const LinksForm = () => {
     const removeLink = async (index, id) => {
         const updatedLinks = links?.links.filter((_, i) => i !== index);
         setLinks({links: updatedLinks});
-        if(id){
-            await destroy(route('links.destroy', id), {
-                onSuccess: () => {
-                    toast.success("Link deleted successfully.")
-                }
-            });
+        const newItemId = typeof id !== 'number' ? id?.split("_")[0] : id
+        if(newItemId !== 'new'){
+            console.log(id)
+            await destroy(route('links.destroy', id));
         }
+        toast.success("Link deleted successfully.")
     };
 
     // drag and drop form 
